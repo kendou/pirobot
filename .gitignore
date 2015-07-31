@@ -1,0 +1,11 @@
+
+# idea IDE files
+.idea/
+.idea/**/*
+
+# node.js modules
+node_modules/
+
+config.js
+
+*.log
