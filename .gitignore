@@ -6,6 +6,6 @@
 # node.js modules
 node_modules/
 
-config.js
-
 *.log
+
+utility/config.json

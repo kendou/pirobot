@@ -48,10 +48,11 @@ body {
   background-color : #888;
 }
 a {
-  text-decoration : none;
+  text-decoration : none;}
+
 a:link, a:visited {color : inherit;}
 a:hover {text-decoration:underline;}
-}
+
 strong {
   font-weight : 800;
   color : #000;
@@ -164,20 +165,25 @@ see: http://maxdesign.com.au/articles/remote/
 #info{
   float: left;
   width: 300px;
-  height: 50px;
+  height: 100%;
 }
 #user{
   float: right;
-  width: 150px;
-  height: 50px;
+  width: 250px;
+  height: 100%;
   margin: 2px;
   padding: 2px;
 }
 #username{
+  float: left;
   padding: 5px;
-  width: 100%;
+  width: 120px;
+  height: 40px;
 }
 #start{
+  position: relative;
   padding: 5px;
-  width: 100%;
+  left: 10px;
+  width: 120px;
+  height: 40px;
 }
