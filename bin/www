@@ -40,7 +40,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('toggleLed', function(ledMap) {
-    utility.log("toggling led:" + ledMap.led);
+    utility.toggleLed(ledMap.led);
   });
 
 });
