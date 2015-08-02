@@ -6,6 +6,8 @@ var nconf = require('nconf');
 var internalLog;
 var writeLog;
 var writeError;
+var toggleLed;
+var gpio = require('onoff').Gpio;
 
 //Initializing utility file
 nconf.argv()
@@ -37,8 +39,26 @@ writeError = function(logStr){
   internalLog(timeString + logStr, console.error);
 };
 
+toggleLed = function(ledStr){
+  var ledPort = nconf.get(ledStr);
+  if(!ledPort) {
+    writeLog('Led undefined:' + ledStr);
+  }
+
+  var led = new gpio(ledPort, 'out');
+  led.write(1, function(){
+    writeLog(ledStr + ' toggled.');
+    setTimeout(function(){
+      led.writeSync(0);
+      led.unexport();
+    }, 2000);
+  })
+
+}
+
 module.exports = {
   nconf : nconf,
   log : writeLog,
-  error : writeError
+  error : writeError,
+  toggleLed : toggleLed
 };
