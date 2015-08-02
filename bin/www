@@ -31,16 +31,16 @@ io.on('connection', function(socket) {
 
   sockets[socket.id] = socket;
 
-  writeLog("Connected from " + socket.request.connection.remoteAddress
+  utility.log("Connected from " + socket.request.connection.remoteAddress
     + " Total clients connected : " + Object.keys(sockets).length);
 
   socket.on('disconnect', function() {
     delete sockets[socket.id];
-    writeLog("Total clients connected : " + Object.keys(sockets).length);
+    utility.log("Total clients connected : " + Object.keys(sockets).length);
   });
 
   socket.on('toggleLed', function(ledMap) {
-    writeLog("toggling led:" + ledMap.led);
+    utility.log("toggling led:" + ledMap.led);
   });
 
 });
