@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('pirobot:server');
 var http = require('http');
+var io = require('socket.io')(http);
 var utility = require('../utility/utility');
 var config = utility.nconf;
 
@@ -22,6 +23,26 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+var sockets = {};
+
+io.on('connection', function(socket) {
+
+  sockets[socket.id] = socket;
+
+  writeLog("Connected from " + socket.request.connection.remoteAddress
+    + " Total clients connected : " + Object.keys(sockets).length);
+
+  socket.on('disconnect', function() {
+    delete sockets[socket.id];
+    writeLog("Total clients connected : " + Object.keys(sockets).length);
+  });
+
+  socket.on('toggleLed', function(ledMap) {
+    writeLog("toggling led:" + ledMap.led);
+  });
+
+});
 
 /**
  * Listen on provided port, on all network interfaces.

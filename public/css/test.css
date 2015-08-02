@@ -1,0 +1,81 @@
+/** Begin reset */
+* {
+  margin : 0;
+  padding : 0;
+  -webkit-box-sizeing : border-box;
+  -moz-box-sizing : border-box;
+  box-sizing : border-box;
+}
+h1, h2, h3, h4, h5, h6, {margin-bottom : 6pt;}
+ol, ul, dl {list-style-position: inside;}
+
+* {
+  -webkit-user-select : none;
+  -khtml-user-select : none;
+  -moz-user-select : -moz-none;
+  -o-user-select : none;
+  -ms-user-select : none;
+  user-slect : none;
+
+  -webkit-user-drag : none;
+  -moz-user-drag : none;
+  -user-drag : none;
+
+  -webkit-tap-highlight-color : transparent;
+  -webkit-touch-callout : none;
+}
+input, textarea, .spa-x-user-select {
+  -webkit-user-select : text;
+  -khtml-user-select : text;
+  -moz-user-select : text;
+  -o-user-select : text;
+  -ms-user-select : text;
+  user-select : text;
+}
+/** End reset */
+
+/** Bgin standard selectors */
+body {
+  margin: 0;
+  padding: 20px;
+  font : 10px 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
+  color : #444;
+  background-color : #888;
+}
+a {
+  text-decoration : none;}
+
+a:link, a:visited {color : inherit;}
+a:hover {text-decoration:underline;}
+
+strong {
+  font-weight : 800;
+  color : #000;
+}
+/** End standard selectors */
+
+#container
+{
+  width: 800px;
+  height: 500px;
+  margin: 0 auto;
+}
+button {
+  width: 200px;
+  height: 50px;
+  margin: 0px -100px;
+  position: relative;
+  left: 50%;
+}
+/*
+#led1 {
+  width: 200px;
+  height: 50px;
+  margin: 0 auto;
+}
+#led2 {
+  width: 200px;
+  height: 50px;
+  margin: 0 auto;
+}
+*/
