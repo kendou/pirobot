@@ -43,6 +43,7 @@ toggleLed = function(ledStr){
   var ledPort = nconf.get(ledStr);
   if(!ledPort) {
     writeLog('Led undefined:' + ledStr);
+    return;
   }
 
   var led = new gpio(ledPort, 'out');
