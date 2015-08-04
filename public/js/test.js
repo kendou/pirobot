@@ -47,10 +47,10 @@ function onCommand(e) {
 }
 
 $(document).ready(function() {
-  $('leftforward').click = onCommand;
-  $('leftback').click = onCommand;
-  $('rightforward').click = onCommand;
-  $('rightback').click = onCommand;
+  $('leftforward').bind('click', onCommand);
+  $('leftback').bind('click', onCommand);
+  $('rightforward').bind('click', onCommand);
+  $('rightback').bind('click', onCommand);
 });
 
 
