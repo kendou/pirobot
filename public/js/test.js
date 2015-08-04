@@ -43,14 +43,15 @@ socket.on('reconnect_failed', function(){
 
 function onCommand(e) {
 //  socket.emit('toggleLed', {led: 'led1'});
+  e.preventDefault();
   console.log("DOM object with id: " + e.target.id + " clicked.");
 }
 
 $(document).ready(function() {
-  $('leftforward').bind('click', onCommand);
-  $('leftback').bind('click', onCommand);
-  $('rightforward').bind('click', onCommand);
-  $('rightback').bind('click', onCommand);
+  $('#leftforward').bind('click', onCommand);
+  $('#leftback').bind('click', onCommand);
+  $('#rightforward').bind('click', onCommand);
+  $('#rightback').bind('click', onCommand);
 });
 
 
