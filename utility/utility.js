@@ -8,8 +8,8 @@ var writeLog;
 var writeError;
 var toggleLed;
 var gpio = require('onoff').Gpio;
-var gpioPortNumbers;
-var gpioPorts;
+var gpioPortNumbers = {};
+var gpioPorts = {};
 var initGPIO;
 var finalizeGPIO;
 
