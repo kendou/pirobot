@@ -46,5 +46,11 @@ function onCommand(e) {
   console.log("DOM object with id: " + e.target.id + " clicked.");
 }
 
-$('leftforward').click = onCommand;
+$(document).ready(function() {
+  $('leftforward').click = onCommand;
+  $('leftback').click = onCommand;
+  $('rightforward').click = onCommand;
+  $('rightback').click = onCommand;
+});
+
 

@@ -41,7 +41,7 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     delete sockets[socket.id];
     utility.log("Total clients connected : " + Object.keys(sockets).length);
-    if(Objects.keys(sockets).length === 0){
+    if(Object.keys(sockets).length === 0){
       utility.log("No clients left, releasing GPIO ports ...");
       utility.finalizeGPIO();
     }
