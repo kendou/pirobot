@@ -8,6 +8,10 @@ var writeLog;
 var writeError;
 var toggleLed;
 var gpio = require('onoff').Gpio;
+var gpioPortNumbers;
+var gpioPorts;
+var initGPIO;
+var finalizeGPIO;
 
 //Initializing utility file
 nconf.argv()
@@ -16,8 +20,29 @@ nconf.argv()
 //Set default values
 nconf.defaults({
   'port': 8080,
-  'fakemode': false
+  'fakemode': false,
+  'leftforward': 19,
+  'leftback': 26,
+  'rightforward': 16,
+  'rightback': 20
 });
+
+initGPIO = function(){
+  gpioPortNumbers.leftforward = nconf.get('leftforward');
+  gpioPortNumbers.leftback = nconf.get('leftback');
+  gpioPortNumbers.rightforward = nconf.get('rightforward');
+  gpioPortNumbers.rightback = nconf.get('rightback');
+  for(var port in gpioPortNumbers){
+    gpioPorts[port] = new gpio(gpioPortNumbers[port],'out');
+  }
+};
+
+finalizeGPIO = function(){
+  for(var port in gpioPorts){
+    gpioPorts[port].unexport();
+    delete gpioPorts[port];
+  }
+}
 
 internalLog = function(logStr, backendLogFunc) {
   backendLogFunc(logStr);
@@ -61,5 +86,7 @@ module.exports = {
   nconf : nconf,
   log : writeLog,
   error : writeError,
-  toggleLed : toggleLed
+  toggleLed : toggleLed,
+  initGPIO : initGPIO,
+  finalizeGPIO : finalizeGPIO
 };

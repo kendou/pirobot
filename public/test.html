@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/test.css" type="text/css"/>
-    <title>Test the leds</title>
+    <title>Test moto</title>
     <!-- jQuery -->
     <script src="js/jq/jquery-1.10.2.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -11,10 +11,15 @@
 </head>
 <body>
 <div id="container">
-    <div id="ledContainer">
-        <br/>
-        <button id="led1" onclick="toggleLed1()">Toggle Led1</button> <br/><br/>
-        <button id="led2" onclick="toggleLed2()">Toggle Led2</button>
+    <div id="ledContainer" class="buttonRow">
+      <div id="firstRow" class="buttonRow">
+        <div class="buttonCell"><button id="leftforward">Left Forward</button></div>
+        <div class="buttonCell"><button id="rightforward">Right Forward</button></div>
+      </div>
+      <div id="secondRow" class="buttonRow">
+        <div class="buttonCell"><button id="leftback">Left Back</button></div>
+        <div class="buttonCell"><button id="rightback">Right Back</button></div>
+      </div>
     </div>
 </div>
 </body>

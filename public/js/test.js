@@ -41,10 +41,10 @@ socket.on('reconnect_failed', function(){
   console.log("Reconnection failed.");
 });
 
-function toggleLed1() {
-  socket.emit('toggleLed', {led: 'led1'});
+function onCommand(e) {
+//  socket.emit('toggleLed', {led: 'led1'});
+  console.log("DOM object with id: " + e.target.id + " clicked.");
 }
 
-function toggleLed2() {
-  socket.emit('toggleLed', {led: 'led2'});
-}
+$('leftforward').click = onCommand;
+
