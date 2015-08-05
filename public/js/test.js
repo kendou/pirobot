@@ -57,14 +57,7 @@ function onChange(e) {
   commands.rightback = $('#rightback').is(':checked');
 
   console.log(JSON.stringify(commands));
-}
-
-function onCommand(e) {
-//  socket.emit('toggleLed', {led: 'led1'});
-  e.preventDefault();
-  console.log("DOM object with id: " + e.target.id + " clicked.");
-  //TODO: emit the command(the DOM id) to the serverside here.
-  socket.emit('robotCommands',{});
+  socket.emit('robotCommands', commands);
 }
 
 $(document).ready(function() {

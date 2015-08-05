@@ -31,7 +31,7 @@ io.on('connection', function(socket) {
 
   sockets[socket.id] = socket;
 
-  utility.log("Connected from " + socket.request.connection.remoteAddress
+  utility.log("Connected from " + socket.request.socket.remoteAddress
     + " Total clients connected : " + Object.keys(sockets).length);
   if(Object.keys(sockets).length === 1){
     utility.log("first client, initlizing GPIO ports ...");
@@ -47,8 +47,9 @@ io.on('connection', function(socket) {
     }
   });
 
-  socket.on('toggleLed', function(ledMap) {
-    utility.toggleLed(ledMap.led);
+  socket.on('robotCommands', function(robotCommands) {
+    utility.log('received robotCommands:' + JSON.stringify(robotCommands));
+    utility.writeGPIOPorts(robotCommands);
   });
 
 });

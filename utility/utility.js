@@ -6,7 +6,7 @@ var nconf = require('nconf');
 var internalLog;
 var writeLog;
 var writeError;
-var toggleLed;
+var writeGPIOPorts;
 var gpio = {};
 var gpioPortNumbers = {};
 var gpioPorts = {};
@@ -75,29 +75,33 @@ writeError = function(logStr){
   internalLog(timeString + logStr, console.error);
 };
 
-toggleLed = function(ledStr){
-  var ledPort = nconf.get(ledStr);
-  if(!ledPort) {
-    writeLog('Led undefined:' + ledStr);
+writeGPIOPorts = function(portMap){
+  if(nconf.get('fakemode') === true){
+    writeLog('Do nothing in fakemode');
     return;
   }
 
-  var led = new gpio(ledPort, 'out');
-  led.write(1, function(){
-    writeLog(ledStr + ' toggled.');
-    setTimeout(function(){
-      led.writeSync(0);
-      led.unexport();
-    }, 2000);
-  })
+  for(var portStr in portMap) {
+    var port = nconf.get(portStr);
+    var value = portMap[portStr];
+    writeLog('port ' + portStr + ': ' + port);
+    if (!port) {
+      writeLog('Led undefined:' + portStr);
+      continue;
+    }
 
-}
+    gpioPorts[port].write(value, function () {
+        writeLog(portStr + ' written to:' + value);
+      }
+    )
+  }
+};
 
 module.exports = {
   nconf : nconf,
   log : writeLog,
   error : writeError,
-  toggleLed : toggleLed,
+  writeGPIOPorts : writeGPIOPorts,
   initGPIO : initGPIO,
   finalizeGPIO : finalizeGPIO
 };

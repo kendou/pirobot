@@ -68,11 +68,13 @@ strong {
   display: inline-block;
   width: 70px;
   height: 50px;
-  padding: 10px;
   margin: 10px;
 }
 
-
+label {
+  font-size: x-large;
+  font-weight:bold;
+}
 /* this is the style of an uncheked "button" */
 .input-check{
   display:inline-block;
@@ -90,7 +92,6 @@ strong {
 .input-check.checked{
   background:red;
   color:black;
-  font-weight:bold
 }
 /* Hide the checkbox */
 .input-check input{
