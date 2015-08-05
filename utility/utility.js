@@ -60,7 +60,7 @@ writeGPIOPorts = function(portMap){
       continue;
     }
 
-    gpioPorts[port].write(value, function () {
+    gpioPorts[portStr].write(value, function () {
         writeLog(portStr + ' written to:' + value);
       }
     )
