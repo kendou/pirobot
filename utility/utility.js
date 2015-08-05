@@ -13,36 +13,6 @@ var gpioPorts = {};
 var initGPIO;
 var finalizeGPIO;
 
-//Initializing utility file
-nconf.argv()
-  .env()
-  .file({ file: './utility/config.json' });
-//Set default values
-nconf.defaults({
-  'port': 8080,
-  'fakemode': true,
-  'leftforward': 19,
-  'leftback': 26,
-  'rightforward': 16,
-  'rightback': 20
-});
-
-if(nconf.get('fakemode') === 'false'){
-  gpio = require('onoff').Gpio;
-}
-initGPIO = function(){
-  if(nconf.get('fakemode') === true){
-    writeLog('initGPIO: do nothing in fakemode');
-    return;
-  }
-  gpioPortNumbers.leftforward = nconf.get('leftforward');
-  gpioPortNumbers.leftback = nconf.get('leftback');
-  gpioPortNumbers.rightforward = nconf.get('rightforward');
-  gpioPortNumbers.rightback = nconf.get('rightback');
-  for(var port in gpioPortNumbers){
-    gpioPorts[port] = new gpio(gpioPortNumbers[port],'out');
-  }
-};
 
 finalizeGPIO = function(){
   if(nconf.get('fakemode') === true){
@@ -94,6 +64,39 @@ writeGPIOPorts = function(portMap){
         writeLog(portStr + ' written to:' + value);
       }
     )
+  }
+};
+
+
+//Initializing utility file
+nconf.argv()
+  .env()
+  .file({ file: './utility/config.json' });
+//Set default values
+nconf.defaults({
+  'port': 8080,
+  'fakemode': true,
+  'leftforward': 19,
+  'leftback': 26,
+  'rightforward': 16,
+  'rightback': 20
+});
+
+if(nconf.get('fakemode') === 'false'){
+  writeLog('importing onoff module ...');
+  gpio = require('onoff').Gpio;
+}
+initGPIO = function(){
+  if(nconf.get('fakemode') === true){
+    writeLog('initGPIO: do nothing in fakemode');
+    return;
+  }
+  gpioPortNumbers.leftforward = nconf.get('leftforward');
+  gpioPortNumbers.leftback = nconf.get('leftback');
+  gpioPortNumbers.rightforward = nconf.get('rightforward');
+  gpioPortNumbers.rightback = nconf.get('rightback');
+  for(var port in gpioPortNumbers){
+    gpioPorts[port] = new gpio(gpioPortNumbers[port],'out');
   }
 };
 
