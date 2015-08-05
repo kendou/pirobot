@@ -53,7 +53,11 @@ writeGPIOPorts = function(portMap){
 
   for(var portStr in portMap) {
     var port = nconf.get(portStr);
-    var value = portMap[portStr];
+    var value = 0;
+    if(portMap[portStr] == true){
+      value = 1;
+    }
+
     writeLog('port ' + portStr + ': ' + port);
     if (!port) {
       writeLog('Led undefined:' + portStr);
