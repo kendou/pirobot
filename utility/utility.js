@@ -7,7 +7,7 @@ var internalLog;
 var writeLog;
 var writeError;
 var toggleLed;
-var gpio = require('onoff').Gpio;
+var gpio = {};
 var gpioPortNumbers = {};
 var gpioPorts = {};
 var initGPIO;
@@ -20,14 +20,21 @@ nconf.argv()
 //Set default values
 nconf.defaults({
   'port': 8080,
-  'fakemode': false,
+  'fakemode': true,
   'leftforward': 19,
   'leftback': 26,
   'rightforward': 16,
   'rightback': 20
 });
 
+if(nconf.get('fakemode') === 'false'){
+  gpio = require('onoff').Gpio;
+}
 initGPIO = function(){
+  if(nconf.get('fakemode') === true){
+    writeLog('initGPIO: do nothing in fakemode');
+    return;
+  }
   gpioPortNumbers.leftforward = nconf.get('leftforward');
   gpioPortNumbers.leftback = nconf.get('leftback');
   gpioPortNumbers.rightforward = nconf.get('rightforward');
@@ -38,6 +45,10 @@ initGPIO = function(){
 };
 
 finalizeGPIO = function(){
+  if(nconf.get('fakemode') === true){
+    writeLog('finalizeGPIO: do nothing in fakemode');
+    return;
+  }
   for(var port in gpioPorts){
     gpioPorts[port].unexport();
     delete gpioPorts[port];

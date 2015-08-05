@@ -41,18 +41,37 @@ socket.on('reconnect_failed', function(){
   console.log("Reconnection failed.");
 });
 
+function onChange(e) {
+  e.preventDefault();
+  if(this.checked){
+    $(this).parent().addClass('checked');
+  }
+  else{
+    $(this).parent().removeClass('checked');
+  }
+
+  var commands = {};
+  commands.leftforward = $('#leftforward').is(':checked');
+  commands.leftback = $('#leftback').is(':checked');;
+  commands.rightforward = $('#rightforward').is(':checked');;
+  commands.rightback = $('#rightback').is(':checked');
+
+  console.log(JSON.stringify(commands));
+}
+
 function onCommand(e) {
 //  socket.emit('toggleLed', {led: 'led1'});
   e.preventDefault();
   console.log("DOM object with id: " + e.target.id + " clicked.");
   //TODO: emit the command(the DOM id) to the serverside here.
+  socket.emit('robotCommands',{});
 }
 
 $(document).ready(function() {
-  $('#leftforward').bind('click', onCommand);
-  $('#leftback').bind('click', onCommand);
-  $('#rightforward').bind('click', onCommand);
-  $('#rightback').bind('click', onCommand);
-});
+  $('#leftforward').bind('change', onChange);
+  $('#leftback').bind('change', onChange);
+  $('#rightforward').bind('change', onChange);
+  $('#rightback').bind('change', onChange);}
+);
 
 
