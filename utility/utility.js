@@ -82,6 +82,7 @@ nconf.defaults({
   'rightback': 20
 });
 
+writeLog('fakemode:' + nconf.get('fakemode'));
 if(nconf.get('fakemode') === 'false'){
   writeLog('importing onoff module ...');
   gpio = require('onoff').Gpio;
