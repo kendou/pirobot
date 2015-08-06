@@ -46,7 +46,9 @@ stopStreaming = function() {
  * @param io
  *    the socket.io object.
  */
-startStreaming = function(io) {
+startStreaming = function(ioObj) {
+  var io = ioObj;
+
   if(config.get('fakemode') == true){
     io.sockets.emit('liveStream', imgUrlPathFakeMode);
     return;
