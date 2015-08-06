@@ -84,7 +84,8 @@ nconf.defaults({
   'leftforward': 19,
   'leftback': 26,
   'rightforward': 16,
-  'rightback': 20
+  'rightback': 20,
+  'maxtime': 60
 });
 
 if(nconf.get('fakemode') === false){

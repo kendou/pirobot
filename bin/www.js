@@ -9,7 +9,9 @@ var debug = require('debug')('pirobot:server');
 var http = require('http');
 var utility = require('../utility/utility');
 var config = utility.nconf;
-
+var currentUserSocket = null; //The socket which is control the robot.
+var sendClientInfo,broadcastInfo, userTimeUp, countDown;
+var timeLeft = 60,intervalId;
 /**
  * Get port from environment and store in Express.
  */
@@ -26,6 +28,44 @@ var server = http.createServer(app);
 var io = require('socket.io')(server);
 
 var sockets = {};
+
+/**
+ * Utility function: sendInfo
+ */
+sendClientInfo = function(socket, info){
+  socket.emit('info',info);
+};
+/**
+ * Utility function: broadcastInfo
+ * @param info
+ */
+broadcastInfo = function(info){
+  io.emit('info', info);
+};
+/**
+ * Utility function: userTimeUp
+ */
+userTimeUp = function(){
+  if(currentUserSocket == null){
+    return;
+  }
+  broadcastInfo('闲置中');
+  currentUserSocket = null;
+  clearInterval(intervalId);
+};
+
+countDown = function(){
+  if(currentUserSocket === null){
+    return;
+  }
+  timeLeft --;
+  if(timeLeft > 0){
+    broadcastInfo(currentUserSocket.user + ' 控制时间:' + timeLeft + '秒');
+  }
+  else{
+    userTimeUp();
+  }
+};
 
 io.on('connection', function(socket) {
 
@@ -50,6 +90,19 @@ io.on('connection', function(socket) {
   socket.on('robotCommands', function(robotCommands) {
     utility.log('received robotCommands:' + JSON.stringify(robotCommands));
     utility.writeGPIOPorts(robotCommands);
+  });
+
+  socket.on('login', function(userMap){
+    if(currentUserSocket === null){
+      utility.log('login request:' + JSON.stringify(userMap));
+      socket.user = userMap.user;
+      currentUserSocket = socket;
+      timeLeft = config.get('maxtime');
+      intervalId = setInterval(countDown, 1000);
+    }
+    else{
+      sendClientInfo(socket, currentUserSocket.user + ' 正在控制中');
+    }
   });
 
 });

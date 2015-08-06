@@ -11,8 +11,8 @@ var socket = new io.connect({
   'reconnectionAttempts': 5
 });
 
-socket.on('ledMessage', function(ledMap) {
-  console.log(ledMap);
+socket.on('info', function(info) {
+  $('#infoLabel').text(info);
 });
 
 socket.on('connect', function(){
@@ -84,11 +84,14 @@ function onTouchend(e){
   sendControls();
 }
 $(document).ready(function() {
-
   for(var i in controls){
     $('#'+controls[i]).on('touchstart mousedown', onTouchstart);
     $('#'+controls[i]).on('touchend mouseup touchcancel', onTouchend);
   }
+
+  $('#start').on('click', function(){
+    socket.emit('login',{user: $('#username').val()});
+  });
 })
 
 
