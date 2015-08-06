@@ -94,6 +94,9 @@ $(document).ready(function() {
   }
 
   $('#start').on('click', function(){
+    if(!$('#username').val()){
+      return;
+    }
     socket.emit('login',{user: $('#username').val()});
   });
 })

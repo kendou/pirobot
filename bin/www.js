@@ -84,7 +84,7 @@ io.on('connection', function(socket) {
     if(currentUserSocket === socket){
       userTimeUp();
     }
-    
+
     delete sockets[socket.id];
     utility.log("Total clients connected : " + Object.keys(sockets).length);
     if(Object.keys(sockets).length === 0){
