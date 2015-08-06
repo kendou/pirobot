@@ -9,7 +9,8 @@ var debug = require('debug')('pirobot:server');
 var http = require('http');
 var utility = require('../utility/utility');
 var config = utility.nconf;
-var currentUserSocket = null; //The socket which is control the robot.
+var camera = require('../utility/camera');
+var currentUserSocket = null; //The socket which is controlling the robot.
 var sendClientInfo,broadcastInfo, userTimeUp, countDown;
 var timeLeft = 60,intervalId;
 /**
@@ -74,16 +75,18 @@ io.on('connection', function(socket) {
   utility.log("Connected from " + socket.request.socket.remoteAddress
     + " Total clients connected : " + Object.keys(sockets).length);
   if(Object.keys(sockets).length === 1){
-    utility.log("first client, initlizing GPIO ports ...");
+    utility.log("first client, initlizing GPIO ports and camera...");
     utility.initGPIO();
+    camera.startStreaming();
   }
 
   socket.on('disconnect', function() {
     delete sockets[socket.id];
     utility.log("Total clients connected : " + Object.keys(sockets).length);
     if(Object.keys(sockets).length === 0){
-      utility.log("No clients left, releasing GPIO ports ...");
+      utility.log("No clients left, releasing GPIO ports and the camera...");
       utility.finalizeGPIO();
+      camera.stopStreaming();
     }
   });
 
@@ -117,8 +120,9 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 process.on('SIGINT', function() {
-  utility.log('Received Signal, releasing GPIO ports ...');
+  utility.log('Received Signal, releasing GPIO ports and the camera...');
   utility.finalizeGPIO();
+  camera.stopStreaming();
   process.exit(1);
 });
 /**
