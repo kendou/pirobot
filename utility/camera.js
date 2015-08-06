@@ -52,7 +52,7 @@ startStreaming = function(io) {
     return;
   }
 
-  if (moduleState.get('watchingFile')) {
+  if (getModuleState('watchingFile')) {
     io.sockets.emit('liveStream', imgUrlPath);
     return;
   }
@@ -114,7 +114,7 @@ startWatch = function(){
   utility.log("current directory:" + process.cwd() + ", about to watch: " + imgPath);
   fileWatcher = fs.watch(imgPath, {persistent: true}, watchCallback);
   utility.log("Start to watch the image file.");
-  moduleState.set('watchingFile', true);
+  setModuleState('watchingFile', true);
 };
 
 stopWatch = function(){
@@ -123,7 +123,7 @@ stopWatch = function(){
     fileWatcher.close();
     fileWatcher = null;
   }
-  moduleState.set('watchingFile', false);
+  setModuleState('watchingFile', false);
 };
 
 module.exports = {
