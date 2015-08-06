@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/test.css" type="text/css"/>
-    <title>Test moto</title>
-    <!-- jQuery -->
-    <script src="js/jq/jquery-1.10.2.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="js/test.js"></script>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/test.css" type="text/css"/>
+  <title>Test moto</title>
+  <!-- jQuery -->
+  <script src="js/jq/jquery-1.10.2.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/test.js"></script>
 </head>
 <body>
-<div id="container">
+
+<div class="controllerContainer">
   <div class="buttonRow">
     <div class="buttonCell">
-        <label class="input-check">
-            <input type="checkbox" id="leftforward"/>&#8593;</label>
+      <label class="input-check"  id="leftforward">&#8593;</label>
+    </div>
+    <div class="buttonCell">
+      <label class="input-check" id="rightforward">&#8593;</label>
+    </div>
+  </div>
+
+  <div class="buttonRow">
+    <div class="buttonCell">
+      <label class="input-check" id="leftback">&#8595;</label>
     </div>
 
     <div class="buttonCell">
-      <label class="input-check">
-        <input type="checkbox" id="rightforward"/>&#8593;</label>
+      <label class="input-check" id="rightback">&#8595;</label>
     </div>
   </div>
+
   <div class="buttonRow">
     <div class="buttonCell">
-      <label class="input-check">
-        <input type="checkbox" id="leftback"/>&#8595;</label>
+      <label class="infoLabel">左轮</label>
     </div>
-    <div class="buttonCell">
-      <label class="input-check">
-        <input type="checkbox" id="rightback"/>&#8595;</label>
+
+    <div class="buttonCell infoRow">
+      <label class="infoLabel">右轮</label>
     </div>
   </div>
 </div>

@@ -1,29 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/style.css" type="text/css"/>
-    <title>Robot on RPI</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/index.css" type="text/css"/>
+  <title>Robot on RPI</title>
+  <!-- jQuery -->
+  <script src="js/jq/jquery-1.10.2.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/index.js"></script>
 </head>
 <body>
 <div class="container">
     <div id="viewscreen">
 
     </div>
-    <div id="controller">
-        <ul>
-            <li id="back"><a href="#" title="Back"><span>Back</span></a></li>
-            <li id="forward"><a href="#" title="Forward"><span>Forward</span></a></li>
-            <li id="top"><a href="#" title="Top of gallery"><span>Top of Gallery</span></a></li>
-            <li id="bottom"><a href="#" title="Bottom of gallery"><span>Bottom of Gallery</span></a></li>
-            <li id="ok"><a href="#" title="OK - start slideshow"><span>OK - start slideshow</span></a></li>
-        </ul>
+    <div class="controllerContainer">
+        <div class="buttonRow">
+            <div class="buttonCell">
+                <label class="input-check"  id="leftforward">&#8593;</label>
+            </div>
+            <div class="buttonCell">
+                <label class="input-check" id="rightforward">&#8593;</label>
+            </div>
+        </div>
+
+        <div class="buttonRow">
+            <div class="buttonCell">
+                <label class="input-check" id="leftback">&#8595;</label>
+            </div>
+
+            <div class="buttonCell">
+                <label class="input-check" id="rightback">&#8595;</label>
+            </div>
+        </div>
+
+        <div class="buttonRow infoRow">
+            <div class="buttonCell">
+                <label class="infoLabel">左轮</label>
+            </div>
+
+            <div class="buttonCell">
+                <label class="infoLabel">右轮</label>
+            </div>
+        </div>
     </div>
-    <div id="footer">
-        <div id="info">
+    <div class="footer">
+        <div class="info">
             <label id="infoLabel">Some info here.</label>
         </div>
-        <div id="user">
+        <div class="user">
             <input id="username" placeholder="Input yoru name"/>
             <button id="start" type="button">Start 1 minute tour</button>
         </div>

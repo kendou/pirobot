@@ -1,3 +1,8 @@
+/*
+ * style.css
+ * Root namespace styles
+ */
+
 /** Begin reset */
 * {
   margin : 0;
@@ -53,11 +58,24 @@ strong {
   color : #000;
 }
 /** End standard selectors */
+.container
+{
+  width: 800px;
+  margin: 0 auto;
+}
+
+#viewscreen {
+  position: relative;
+  width: 320px;
+  height: 240px;
+  margin: 0 auto;
+  border: solid;
+}
 
 .controllerContainer
 {
   display: table;
-  width: 800px;
+  width: 400px;
   height: auto;
   margin: 0 auto;
   text-align: center; /* this will center the in-block divs */
@@ -67,17 +85,19 @@ strong {
 }
 .controllerContainer .buttonCell{
   display: inline-block;
-  width: 300px;
+  width: 150px;
   height: 150px;
-  margin: 40px;
+  margin: 20px;
+}
+.buttonRow.infoRow .buttonCell{
+  height: 80px;
+  margin: 10px;
 }
 .controllerContainer label {
   font-size: x-large;
   font-weight:bold;
 }
-.controllerContainer div{
 
-}
 /* this is the style of an uncheked "button" */
 .controllerContainer .input-check{
   display:inline-block;
@@ -85,7 +105,7 @@ strong {
 
   padding:5px 8px;
   background:green;
-  width: 300px;
+  width: 150px;
   height: 150px;
   color: white;
   text-align: center;
@@ -102,4 +122,39 @@ strong {
   color: white;
   text-align: center;
   line-height: 60px;
+}
+
+.footer {
+  position: relative;
+  height: 80px;
+  margin: 10px;
+}
+.footer label{
+  color: white;
+  font-size: large;
+}
+.footer .info{
+  float: left;
+  width: 300px;
+  height: 100%;
+}
+.footer .user{
+  float: right;
+  width: 250px;
+  height: 100%;
+  margin: 2px;
+  padding: 2px;
+}
+#username{
+  float: left;
+  padding: 5px;
+  width: 120px;
+  height: 40px;
+}
+#start{
+  position: relative;
+  padding: 5px;
+  left: 10px;
+  width: 120px;
+  height: 40px;
 }
