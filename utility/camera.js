@@ -10,7 +10,7 @@ var config = utility.nconf;
 
 var proc;
 var fileWatcher = null;
-var imgPath = "../public/img2/pirobot.jpg";
+var imgPath = "public/img2/pirobot.jpg";
 var imgUrlPath = "img2/pirobot.jpg";
 var imgUrlPathFakeMode = "img/nopower.jpg";
 var startStreaming, stopStreaming, startWatch,stopWatch;
