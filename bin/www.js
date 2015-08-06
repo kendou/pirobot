@@ -77,7 +77,7 @@ io.on('connection', function(socket) {
   if(Object.keys(sockets).length === 1){
     utility.log("first client, initlizing GPIO ports and camera...");
     utility.initGPIO();
-    camera.startStreaming();
+    camera.startStreaming(io);
   }
 
   socket.on('disconnect', function() {
