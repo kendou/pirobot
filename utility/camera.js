@@ -126,7 +126,7 @@ stopWatch = function(){
   moduleState.set('watchingFile', false);
 };
 
-module.export = {
+module.exports = {
   startStreaming: startStreaming,
   stopStreaming: stopStreaming
 };
