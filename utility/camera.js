@@ -15,6 +15,7 @@ var imgUrlPath = "img2/pirobot.jpg";
 var imgUrlPathFakeMode = "img/nopower.jpg";
 var startStreaming, stopStreaming, startWatch,stopWatch;
 var moduleState = {watchingFile: false}, getModuleState, setModuleState;
+var io; //store the socket.io object.
 
 //////////////////////////////////////////////////////Begin utility methods
 getModuleState = function(state){
@@ -47,7 +48,7 @@ stopStreaming = function() {
  *    the socket.io object.
  */
 startStreaming = function(ioObj) {
-  var io = ioObj;
+  io = ioObj;
 
   if(config.get('fakemode') == true){
     io.sockets.emit('liveStream', imgUrlPathFakeMode);
