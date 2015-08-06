@@ -133,7 +133,7 @@ strong {
 
 .footer {
   position: relative;
-  height: 80px;
+  height: 150px;
   margin: 10px;
   text-align: center;
 }
@@ -144,21 +144,21 @@ strong {
 .footer .info{
   display: inline-block;
   float: left;
-  width: 300px;
+  width: 400px;
   height: 100%;
+}
+.footer input, .footer button{
+  font-size: xx-large;
 }
 .footer .user{
   display: inline-block;
-  float: right;
-  width: 250px;
+  width: auto;
   height: 100%;
-  margin: 2px;
-  padding: 2px;
 }
 #username{
   float: left;
   padding: 5px;
-  width: 120px;
+  width: 200px;
   height: 40px;
 }
 #start{
