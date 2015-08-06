@@ -15,6 +15,10 @@ socket.on('info', function(info) {
   $('#infoLabel').text(info);
 });
 
+socket.on('liveStream', function(url){
+  $('#stream').attr('src',url);
+});
+
 socket.on('connect', function(){
   console.log("Connected.");
 });
