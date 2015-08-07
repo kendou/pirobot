@@ -11,7 +11,7 @@ var utility = require('../utility/utility');
 var config = utility.nconf;
 var camera = require('../utility/camera');
 var currentUserSocket = null; //The socket which is controlling the robot.
-var sendClientInfo,broadcastInfo, userTimeUp, countDown;
+var sendClientInfo,sendStateChange, broadcastInfo, userTimeUp, countDown;
 var timeLeft = 60,intervalId;
 /**
  * Get port from environment and store in Express.
@@ -36,6 +36,9 @@ var sockets = {};
 sendClientInfo = function(socket, info){
   socket.emit('info',info);
 };
+sendStateChange = function(socket, stateInfo){
+  socket.emit('stateChange', stateInfo);
+}
 /**
  * Utility function: broadcastInfo
  * @param info
@@ -50,6 +53,9 @@ userTimeUp = function(){
   if(currentUserSocket == null){
     return;
   }
+  sendStateChange(currentUserSocket, {
+    logState: false,
+  });
   broadcastInfo('闲置中');
   currentUserSocket = null;
   clearInterval(intervalId);
@@ -104,6 +110,11 @@ io.on('connection', function(socket) {
       utility.log('login request:' + JSON.stringify(userMap));
       socket.user = userMap.user;
       currentUserSocket = socket;
+      sendStateChange(socket, {
+        logState: true,
+        info: currentUserSocket.user + ' 正在控制中'
+      });
+
       timeLeft = config.get('maxtime');
       intervalId = setInterval(countDown, 1000);
     }

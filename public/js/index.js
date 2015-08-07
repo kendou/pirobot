@@ -3,6 +3,8 @@
  */
 
 var controls = ['leftforward', 'leftback', 'rightforward', 'rightback'];
+var logState = false;
+var setInfo;
 
 var socket = new io.connect({
   'reconnection': true,
@@ -11,8 +13,21 @@ var socket = new io.connect({
   'reconnectionAttempts': 5
 });
 
+setInfo = function(infoStr){
+  $('#infoLabel').text(infoStr);
+};
+
 socket.on('info', function(info) {
-  $('#infoLabel').text(info);
+  setInfo(info);
+});
+
+socket.on('stateChange', function(stateInfo){
+  if(stateInfo.hasOwnProperty('logState')){
+    logState = stateInfo['logState'];
+  }
+  if(stateInfo.hasOwnProperty('info')){
+    setInfo(stateInfo['info']);
+  }
 });
 
 socket.on('liveStream', function(url){
@@ -77,12 +92,19 @@ function sendControls(){
 
 function onTouchstart(e){
   e.preventDefault();
+  if(logState == false){
+    setInfo('请先登录');
+    return;
+  }
   console.log('Touchstart or mousedown event detected');
   $(this).addClass('checked');
   sendControls();
 }
 function onTouchend(e){
   e.preventDefault();
+  if(logState == false){
+    return;
+  }
   console.log('Touchend or mouseup event detecgted');
   $(this).removeClass('checked');
   sendControls();
@@ -94,6 +116,9 @@ $(document).ready(function() {
   }
 
   $('#start').on('click', function(){
+    if(logState === true){
+      return;
+    }
     if(!$('#username').val()){
       return;
     }
