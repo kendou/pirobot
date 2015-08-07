@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no" />
   <link rel="stylesheet" href="css/index.css" type="text/css"/>
   <title>Robot on RPI</title>
   <!-- jQuery -->
@@ -11,7 +12,7 @@
 </head>
 <body>
 <div class="container">
-    <div id="viewscreen">
+    <div class="viewscreen">
         <img src="img/nopower.jpg" id="stream">
     </div>
     <div class="controllerContainer">
@@ -49,7 +50,7 @@
             <label id="infoLabel">闲置中</label>
         </div>
         <div class="user">
-            <input id="username" placeholder="Your name"/>
+            <input id="username" placeholder="Name"/>
             <button id="start" type="button">Go!</button>
         </div>
     </div>

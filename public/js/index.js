@@ -120,6 +120,7 @@ $(document).ready(function() {
       return;
     }
     if(!$('#username').val()){
+      setInfo('请输入名字');
       return;
     }
     socket.emit('login',{user: $('#username').val()});
