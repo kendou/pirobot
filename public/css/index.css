@@ -137,28 +137,30 @@ strong {
   line-height: 8vh;
 }
 
-.footer {
+.infoBanner {
   position: relative;
   width: 100%;
   height: 8vh;
   margin: 0px;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   text-align: center;
 }
-.footer label{
+.infoBanner label{
   color: white;
   font-size: 4vw;
 }
-.footer .info{
+.infoBanner .info{
   display: inline-block;
   float: left;
   width: 50%;
   height: 100%;
   text-align: left;
 }
-.footer input, .footer button{
+.infoBanner input, .infoBanner button{
   font-size: 3vw;
 }
-.footer .user{
+.infoBanner .user{
   display: inline-block;
   width: 40%;
   height: 100%;
