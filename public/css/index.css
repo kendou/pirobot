@@ -71,7 +71,7 @@ strong {
   width: 100%;
   height: 40%;
   margin: 0 auto;
-  border: solid;
+  padding-top: 2vh;
 }
 #stream {
   width: 95%;
@@ -130,6 +130,7 @@ strong {
 .controllerContainer .input-check.checked{
   background:red;
   color:black;
+  padding-bottom: 2vh;
 }
 .controllerContainer .infoLabel{
   width: 100%;
