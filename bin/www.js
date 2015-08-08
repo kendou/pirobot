@@ -10,25 +10,11 @@ var http = require('http');
 var utility = require('../utility/utility');
 var config = utility.nconf;
 var camera = require('../utility/camera');
+var normalizePort,onError,onListening;
 var currentUserSocket = null; //The socket which is controlling the robot.
 var sendClientInfo,sendStateChange, broadcastInfo, userTimeUp, countDown;
 var timeLeft = 60,intervalId;
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || config.get('port'));
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-var io = require('socket.io')(server);
-
-var sockets = {};
+var server, io, sockets;
 
 /**
  * Utility function: sendInfo
@@ -57,6 +43,7 @@ userTimeUp = function(){
     logState: false,
   });
   broadcastInfo('闲置中');
+  utility.resetGPIO();
   currentUserSocket = null;
   clearInterval(intervalId);
 };
@@ -73,6 +60,84 @@ countDown = function(){
     userTimeUp();
   }
 };
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+normalizePort = function(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+};
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+onError = function(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      utility.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      utility.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+};
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+onListening = function() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+};
+
+////////////////////////////////////Begin the module initialization
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || config.get('port'));
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+server = http.createServer(app);
+
+io = require('socket.io')(server);
+
+sockets = {};
 
 io.on('connection', function(socket) {
 
@@ -140,62 +205,3 @@ process.on('SIGINT', function() {
   camera.stopStreaming();
   process.exit(1);
 });
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      utility.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      utility.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}

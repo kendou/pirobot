@@ -10,8 +10,7 @@ var writeGPIOPorts;
 var gpio = {};
 var gpioPortNumbers = {};
 var gpioPorts = {};
-var initGPIO;
-var finalizeGPIO;
+var initGPIO,resetGPIO,finalizeGPIO;
 
 
 finalizeGPIO = function(){
@@ -24,6 +23,16 @@ finalizeGPIO = function(){
     delete gpioPorts[port];
   }
 }
+
+resetGPIO = function(){
+  if(nconf.get('fakemode') === true){
+    writeLog('resetGPIO: do nothing in fakemode');
+    return;
+  }
+  for(var port in gpioPorts){
+    gpioPorts[port].write(0,function(){});
+  }
+};
 
 internalLog = function(logStr, backendLogFunc) {
   backendLogFunc(logStr);
@@ -72,7 +81,7 @@ writeGPIOPorts = function(portMap){
   }
 };
 
-
+////////////////////////////////////Begin the module initialization
 //Initializing utility file
 nconf.argv()
   .env()
@@ -112,5 +121,6 @@ module.exports = {
   error : writeError,
   writeGPIOPorts : writeGPIOPorts,
   initGPIO : initGPIO,
+  resetGPIO : resetGPIO,
   finalizeGPIO : finalizeGPIO
 };

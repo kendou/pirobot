@@ -17,51 +17,6 @@ setInfo = function(infoStr){
   $('#infoLabel').text(infoStr);
 };
 
-socket.on('info', function(info) {
-  setInfo(info);
-});
-
-socket.on('stateChange', function(stateInfo){
-  if(stateInfo.hasOwnProperty('logState')){
-    logState = stateInfo['logState'];
-  }
-  if(stateInfo.hasOwnProperty('info')){
-    setInfo(stateInfo['info']);
-  }
-});
-
-socket.on('liveStream', function(url){
-  $('#stream').attr('src',url);
-});
-
-socket.on('connect', function(){
-  console.log("Connected.");
-});
-
-socket.on('connect_error', function(error){
-  console.log("Connection error: " + error.toString());
-});
-
-socket.on('connect_timeout', function(){
-  console.log("Connect timeout.")
-});
-
-socket.on('reconnect', function(reconnectNum){
-  console.log("Reconnected after " + reconnectNum + " retries.");
-});
-
-socket.on('reconnecting', function(reconnectNum){
-  console.log("Reconnection attempt number:" + reconnectNum);
-});
-
-socket.on('reconnect_error', function(error){
-  console.log("Reconnection error: " + error.toString());
-});
-
-socket.on('reconnect_failed', function(){
-  console.log("Reconnection failed.");
-});
-
 function onChange(e) {
   e.preventDefault();
   if(this.checked){
@@ -109,6 +64,65 @@ function onTouchend(e){
   $(this).removeClass('checked');
   sendControls();
 }
+
+function resetControls(){
+  for(var i in controls){
+    $('#'+controls[i]).removeClass('checked');
+  }
+}
+
+/////////////////////////////////////////////Begin module initialization.
+////////////////Socket intialization
+(function(){
+  socket.on('info', function(info) {
+    setInfo(info);
+  });
+
+  socket.on('stateChange', function(stateInfo){
+    if(stateInfo.hasOwnProperty('logState')){
+      logState = stateInfo['logState'];
+      if(logState == false){
+        resetControls();
+      }
+    }
+    if(stateInfo.hasOwnProperty('info')){
+      setInfo(stateInfo['info']);
+    }
+  });
+
+  socket.on('liveStream', function(url){
+    $('#stream').attr('src',url);
+  });
+
+  socket.on('connect', function(){
+    console.log("Connected.");
+  });
+
+  socket.on('connect_error', function(error){
+    console.log("Connection error: " + error.toString());
+  });
+
+  socket.on('connect_timeout', function(){
+    console.log("Connect timeout.")
+  });
+
+  socket.on('reconnect', function(reconnectNum){
+    console.log("Reconnected after " + reconnectNum + " retries.");
+  });
+
+  socket.on('reconnecting', function(reconnectNum){
+    console.log("Reconnection attempt number:" + reconnectNum);
+  });
+
+  socket.on('reconnect_error', function(error){
+    console.log("Reconnection error: " + error.toString());
+  });
+
+  socket.on('reconnect_failed', function(){
+    console.log("Reconnection failed.");
+  });
+})();
+
 $(document).ready(function() {
   for(var i in controls){
     $('#'+controls[i]).on('touchstart mousedown', onTouchstart);
