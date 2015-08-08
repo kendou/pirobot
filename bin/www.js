@@ -197,6 +197,10 @@ io.on('connection', function(socket) {
   });
 
   socket.on('robotCommands', function(robotCommands) {
+    if(socket != currentUserSocket){
+      utility.log('commands from non-logged user, ignore');
+      return;
+    }
     var gpioCommands = convertClientCommands(robotCommands);
     utility.log('received robotCommands:' + JSON.stringify(robotCommands)+ ", converted to " + JSON.stringify(gpioCommands));
     utility.writeGPIOPorts(gpioCommands);

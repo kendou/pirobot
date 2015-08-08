@@ -111,18 +111,27 @@ function resetControls(){
 
   socket.on('connect', function(){
     console.log("Connected.");
+    logState = false;
+  });
+
+  socket.on('disconnect', function(){
+    console.log("disconnected.");
+    logState = false;
   });
 
   socket.on('connect_error', function(error){
     console.log("Connection error: " + error.toString());
+    logState = false;
   });
 
   socket.on('connect_timeout', function(){
-    console.log("Connect timeout.")
+    console.log("Connect timeout.");
+    logState = false;
   });
 
   socket.on('reconnect', function(reconnectNum){
     console.log("Reconnected after " + reconnectNum + " retries.");
+    logState = false;
   });
 
   socket.on('reconnecting', function(reconnectNum){
@@ -131,6 +140,7 @@ function resetControls(){
 
   socket.on('reconnect_error', function(error){
     console.log("Reconnection error: " + error.toString());
+    logState = false;
   });
 
   socket.on('reconnect_failed', function(){
