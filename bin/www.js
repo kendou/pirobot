@@ -15,6 +15,7 @@ var currentUserSocket = null; //The socket which is controlling the robot.
 var sendClientInfo,sendStateChange, broadcastInfo, userTimeUp, countDown;
 var timeLeft = 60,intervalId;
 var server, io, sockets;
+var convertClientCommands;
 
 /**
  * Utility function: sendInfo
@@ -121,6 +122,36 @@ onListening = function() {
   debug('Listening on ' + bind);
 };
 
+/**
+ * Convert client side "forward, left, right, back" commands to robot's GPIO commands "leftforward, rightforward,
+ * leftback, and rightback
+ * @param clientRobotCommands: "forward, left, right, back" only contains 0 or 1 true value.
+ */
+convertClientCommands = function(clientRobotCommands){
+  var gpioCommands = {
+    leftforward: 0,
+    rightforward: 0,
+    leftback: 0,
+    rightback: 0
+  }
+  if(clientRobotCommands.forward == true){
+    gpioCommands.leftforward = 1;
+    gpioCommands.rightforward = 1;
+  }
+  else if(clientRobotCommands.left == true){
+    gpioCommands.leftback = 1;
+    gpioCommands.rightforward = 1;
+  }
+  else if(clientRobotCommands.right == true){
+    gpioCommands.rightback = 1;
+    gpioCommands.leftforward = 1;
+  }
+  else if(clientRobotCommands.back == true){
+    gpioCommands.leftback = 1;
+    gpioCommands.rightback = 1;
+  }
+  return gpioCommands;
+};
 ////////////////////////////////////Begin the module initialization
 /**
  * Get port from environment and store in Express.
@@ -166,8 +197,9 @@ io.on('connection', function(socket) {
   });
 
   socket.on('robotCommands', function(robotCommands) {
-    utility.log('received robotCommands:' + JSON.stringify(robotCommands));
-    utility.writeGPIOPorts(robotCommands);
+    var gpioCommands = convertClientCommands(robotCommands);
+    utility.log('received robotCommands:' + JSON.stringify(robotCommands)+ ", converted to " + JSON.stringify(gpioCommands));
+    utility.writeGPIOPorts(gpioCommands);
   });
 
   socket.on('login', function(userMap){

@@ -62,10 +62,6 @@ writeGPIOPorts = function(portMap){
 
   for(var portStr in portMap) {
     var port = nconf.get(portStr);
-    var value = 0;
-    if(portMap[portStr] == true){
-      value = 1;
-    }
 
     writeLog('port ' + portStr + ': ' + port);
     if (!port) {
@@ -73,8 +69,8 @@ writeGPIOPorts = function(portMap){
       continue;
     }
 
-    writeLog(portStr + ' written to:' + value);
-    gpioPorts[portStr].write(value, function () {
+    writeLog(portStr + ' written to:' + portMap[portStr]);
+    gpioPorts[portStr].write(portMap[portStr], function () {
 
       }
     )

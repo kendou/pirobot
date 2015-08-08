@@ -42,8 +42,8 @@ input, textarea, .spa-x-user-select {
 /** Bgin standard selectors */
 body {
   margin: 0;
-  padding: 20px;
-  font : 10px 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
+  padding: 1vh;
+  font : 4vw 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
   color : #444;
   background-color : #888;
 }
@@ -84,27 +84,29 @@ strong {
 .controllerContainer
 {
   display: table;
-  width: 60%;
+  width: 80%;
   height: 40%;
   margin: 0 auto;
   text-align: center; /* this will center the in-block divs */
+  padding-top: 2vh;
 }
 .controllerContainer .buttonRow{
   display: table-row;
-  height: 40%;
+  width: 100%;
+  height: 33.3%;
 }
-.controllerContainer .buttonRow.infoRow{
-  height: 20%;
-}
+
 .controllerContainer .buttonCell{
   display: inline-block;
-  width: 50%;
+  width: 40%;
   height: 100%;
-  margin: 0px;
+
 }
-.buttonRow.infoRow .buttonCell{
-  height: 100%;
-  margin: 0px;
+.buttonCell.left{
+  padding-right: 1vw;
+}
+.buttonCell.right{
+  padding-left: 1vw;
 }
 .controllerContainer label {
   font-size: 4vw;
@@ -116,7 +118,6 @@ strong {
   display:inline-block;
   border-radius: 50%;
 
-  padding:5px 8px;
   background:green;
   width: 100%;
   height: 100%;
@@ -124,6 +125,7 @@ strong {
   text-align: center;
   line-height: 16vh;
 }
+
 /* This is the style for a checked "button" */
 .controllerContainer .input-check.checked{
   background:red;
@@ -156,6 +158,7 @@ strong {
   width: 50%;
   height: 100%;
   text-align: left;
+  line-height: 8vh;
 }
 .infoBanner input, .infoBanner button{
   font-size: 3vw;

@@ -2,7 +2,7 @@
  * Created by huangjian on 15/8/2.
  */
 
-var controls = ['leftforward', 'leftback', 'rightforward', 'rightback'];
+var controls = ['forward', 'left', 'right', 'back'];
 var logState = false;
 var setInfo;
 
@@ -27,10 +27,10 @@ function onChange(e) {
   }
 
   var commands = {};
-  commands.leftforward = $('#leftforward').is(':checked');
-  commands.leftback = $('#leftback').is(':checked');;
-  commands.rightforward = $('#rightforward').is(':checked');;
-  commands.rightback = $('#rightback').is(':checked');
+  commands.left = $('#left').is(':checked');
+  commands.right = $('#right').is(':checked');;
+  commands.forward = $('#forward').is(':checked');;
+  commands.back = $('#back').is(':checked');
 
   console.log(JSON.stringify(commands));
   socket.emit('robotCommands', commands);
@@ -45,10 +45,25 @@ function sendControls(){
   socket.emit('robotCommands', commands);
 }
 
+//check if there's control button already held
+function controlChecked(){
+  for(var i in controls){
+    if($('#' + controls[i]).hasClass('checked')){
+      return controls[i];
+    }
+  }
+  return null;
+}
 function onTouchstart(e){
   e.preventDefault();
   if(logState == false){
     setInfo('请先登录');
+    return;
+  }
+
+  var control = controlChecked();
+  if(control != null && control != e.target.id){
+    console.log('Multi touch not allowed');
     return;
   }
   console.log('Touchstart or mousedown event detected');
