@@ -16,7 +16,7 @@ var sendClientInfo,sendStateChange, broadcastInfo, userTimeUp, countDown;
 var timeLeft = 60,intervalId;
 var server, io, sockets;
 var convertClientCommands;
-
+var processCleanup;
 /**
  * Utility function: sendInfo
  */
@@ -62,6 +62,10 @@ countDown = function(){
   }
 };
 
+processCleanup = function(){
+  utility.finalizeGPIO();
+  camera.stopStreaming();
+}
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -236,8 +240,16 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 process.on('SIGINT', function() {
-  utility.log('Received Signal, releasing GPIO ports and the camera...');
-  utility.finalizeGPIO();
-  camera.stopStreaming();
+  utility.log('Received SIGINT, releasing GPIO ports and the camera...');
+  processCleanup();
   process.exit(1);
+});
+process.on('SIGTERM', function(){
+  utility.log('Received SIGTERM, releasing GPIO ports and the camera...');
+  processCleanup();
+  process.exit(1);
+});
+process.on('exit', function(code){
+  utility.log("node about to exit with code:" + code);
+  processCleanup();
 });
