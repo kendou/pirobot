@@ -11,7 +11,7 @@ How-to:
 1. A Raspberry PI (I used a RPI 2) with Raspbian installed, a RPI camera ( I used a RPI camera G ), a USB wifi card.
 2. Necessary components to build a "robot". I ordered an L298N controller, 2 motors, 1 chasis with 2 wheels, several 
 jumpers(male to male, male to female, female to female) from a [taobao shop](http://shop112183962.world.taobao.com/?spm=a312a.7728556.2015080705.4.cdD31B),
-altegher 51 RMB. Power module: I used an Aiguo OL10400 which has two USB outputs for RPI and L298N.
+altogher 51 RMB. Power module: I used an Aiguo OL10400 which has two USB outputs for RPI and L298N.
 3. The mechanism part should be easy. Not exactly the same, but [this video](https://www.youtube.com/watch?v=AZSiqj0NZgU) may be helpful.
 4. Nodejs. I need "onoff" module to control the GPIOs but it has installation issue on Nodejs 0.11.9 and 0.12.5. I ended up to install Nodejs 0.10.28.
 5. Clone the project to your RPI, say /home/pi/pirobot.
