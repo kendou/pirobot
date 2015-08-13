@@ -253,3 +253,8 @@ process.on('exit', function(code){
   utility.log("node about to exit with code:" + code);
   processCleanup();
 });
+process.on('uncaughtException',function(err){
+  utility.log('Uncaught exception:' + err.message);
+  processCleanup();
+  process.exit(1);
+})
