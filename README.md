@@ -6,7 +6,6 @@ This project has below features:
 -  Live "video" streaming from the robot's "eye" - a RPI camera.
 -  Basic user management: each user has 1 minute to control the robot.
 
-//test again.
 How-to:
 ------
 1. A Raspberry PI (I used a RPI 2) with Raspbian installed, a RPI camera ( I used a RPI camera G ), a USB wifi card.
