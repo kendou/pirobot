@@ -2,7 +2,7 @@
 Robot/car on a Raspberry Pi 2
 
 This project has below features:
--  Controlling a 2-wheel robot via web interface over internet.
+-  Control a 2-wheel robot via web interface over internet.
 -  Live "video" streaming from the robot's "eye" - a RPI camera.
 -  Basic user management: each user has 1 minute to control the robot.
 
